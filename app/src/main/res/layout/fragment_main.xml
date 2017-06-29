@@ -6,18 +6,16 @@
     tools:context="com.example.bolek.minesweeper_android.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <HorizontalScrollView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <GridView
             android:id="@+id/grid"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="500dp"
-            android:gravity="center"
-            android:horizontalSpacing="0dp"
-            android:stretchMode="spacingWidthUniform"
-            android:verticalSpacing="0dp" />
-    </HorizontalScrollView>
+            android:clickable="true"
+            android:numColumns="4"/>
+    </LinearLayout>
 </HorizontalScrollView>
