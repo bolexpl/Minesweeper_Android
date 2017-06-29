@@ -3,7 +3,6 @@ package com.example.bolek.minesweeper_android;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatButton;
-import android.util.AttributeSet;
 
 public class Field extends AppCompatButton {
 
@@ -16,45 +15,10 @@ public class Field extends AppCompatButton {
     public static final int MINA = -1;
     public static final int PUSTE = 0;
 
-    public Field(Context context) {
-        super(context);
-        this.state = 0;
-        this.value = 0;
-        init();
-    }
-
     public Field(Context context, int state, int value) {
-        super(context);
+        super(context, null, R.style.Field);
         this.state = state;
         this.value = value;
-        init();
-    }
-
-    public Field(Context context, AttributeSet attrs, int state, int value) {
-        super(context, attrs);
-        this.state = state;
-        this.value = value;
-        init();
-    }
-
-    public Field(Context context, AttributeSet attrs, int defStyleAttr, int state, int value) {
-        super(context, attrs, defStyleAttr);
-        this.state = state;
-        this.value = value;
-        init();
-    }
-
-    public Field(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.state = 0;
-        this.value = 0;
-        init();
-    }
-
-    public Field(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        this.state = 0;
-        this.value = 0;
         init();
     }
 
@@ -65,6 +29,7 @@ public class Field extends AppCompatButton {
         }else{
             setBackgroundColor(Color.DKGRAY);
         }
+        setPadding(0,10,0,10);
     }
 
     public int getState() {

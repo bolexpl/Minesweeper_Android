@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,13 +16,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (findViewById(R.id.fragment_container) != null) {
-            if (savedInstanceState != null) {
-                return;
-            }
-            MainActivityFragment frag = new MainActivityFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, frag).commit();
+
+        Field[] fields = new Field[64];
+        for (int i = 0; i < fields.length; i++) {
+            fields[i] = new Field(this, Field.ODKRYTE, i+1);
         }
+
+        FieldAdapter fa = new FieldAdapter(this, fields);
+
+        GridView grid = (GridView) findViewById(R.id.grid);
+        grid.setNumColumns(8);
+        grid.setAdapter(fa);
+
+
     }
 
     @Override
