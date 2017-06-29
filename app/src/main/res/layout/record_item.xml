@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/nr"
+        style="@style/Table"
+        android:layout_column="0"
+        android:text="Nr" />
+
+    <TextView
+        android:id="@+id/czas"
+        style="@style/Table"
+        android:layout_column="1"
+        android:text="Czas" />
+
+    <TextView
+        android:id="@+id/plansza"
+        style="@style/Table"
+        android:layout_column="2"
+        android:text="Plansza" />
+
+    <TextView
+        android:id="@+id/gracz"
+        style="@style/Table"
+        android:layout_column="3"
+        android:text="Gracz" />
+</TableRow>

@@ -28,4 +28,13 @@
         <item name="background">@drawable/field_shape</item>
     </style>
 
+    <style name="Table">
+        <item name="android:background">@drawable/border</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingEnd">10sp</item>
+        <item name="android:paddingStart">10sp</item>
+    </style>
+
 </resources>
