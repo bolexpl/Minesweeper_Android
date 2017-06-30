@@ -25,6 +25,8 @@
     <Button
         android:id="@+id/button3"
         style="@style/Field"
+        android:text="1"
+        android:textColor="#0000ff"
         android:background="@drawable/field_odkryte"
         android:layout_alignParentTop="true"
         android:layout_marginStart="23dp"

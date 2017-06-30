@@ -1,5 +1,6 @@
 package com.example.bolek.minesweeper_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.debug){
+            Intent i = new Intent(this, DebugActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

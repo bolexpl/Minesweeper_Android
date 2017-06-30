@@ -1,6 +1,7 @@
 package com.example.bolek.minesweeper_android;
 
 
+import android.graphics.Color;
 import android.widget.Button;
 
 public class Field {
@@ -11,6 +12,17 @@ public class Field {
 
     public static final int MINA = -1;
     public static final int PUSTE = 0;
+
+    public static final int colors[] = {
+            Color.BLUE,
+            Color.GREEN,
+            Color.RED,
+            Color.YELLOW,
+            Color.CYAN,
+            Color.MAGENTA,
+            Color.rgb(0xff, 0x7d, 0x0),
+            Color.DKGRAY
+    };
 
     private int state;
     private int value;
