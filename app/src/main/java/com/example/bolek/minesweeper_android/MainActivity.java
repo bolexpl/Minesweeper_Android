@@ -4,9 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private int height = 8;
     private int mines = 0;
     private Field[] fields;
+    private Button[][] bt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +30,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         fields = new Field[width * height];
-        for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(Field.ODKRYTE, i, null);
+//        for (int i = 0; i < fields.length; i++) {
+//            fields[i] = new Field(Field.ODKRYTE, i, null);
+//        }
+
+//        FieldAdapter fa = new FieldAdapter(this, fields);
+//        GridView grid = (GridView) findViewById(R.id.grid);
+//        grid.setNumColumns(width);
+//        grid.setAdapter(fa);
+
+
+        TableLayout table = (TableLayout) findViewById(R.id.grid);
+
+        bt = new Button[height][width];
+        for (int i = 0; i < height; i++) {
+
+            TableRow row = new TableRow(this);
+            for (int c = 0; c < width; c++) {
+                View v = LayoutInflater.from(this).inflate(R.layout.grid_item, null, false);
+                bt[i][c] = (Button) v.findViewById(R.id.field);
+                row.addView(bt[i][c]);
+            }
+            table.addView(row);
         }
-
-        FieldAdapter fa = new FieldAdapter(this, fields);
-
-        GridView grid = (GridView) findViewById(R.id.grid);
-        grid.setNumColumns(width);
-        grid.setAdapter(fa);
     }
 
     @Override
