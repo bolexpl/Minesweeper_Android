@@ -9,6 +9,10 @@ import android.widget.GridView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int width = 7;
+    private int height = 8;
+    private int mines = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,18 +21,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        Field[] fields = new Field[64];
+        Field[] fields = new Field[width * height];
         for (int i = 0; i < fields.length; i++) {
-            fields[i] = new Field(this, Field.ODKRYTE, i+1);
+            fields[i] = new Field(Field.ODKRYTE, i, null);
         }
 
         FieldAdapter fa = new FieldAdapter(this, fields);
 
         GridView grid = (GridView) findViewById(R.id.grid);
-        grid.setNumColumns(8);
+        grid.setNumColumns(width);
         grid.setAdapter(fa);
-
-
     }
 
     @Override
