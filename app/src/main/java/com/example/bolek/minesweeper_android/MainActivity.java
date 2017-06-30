@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private int width = 7;
     private int height = 8;
     private int mines = 0;
-    private Field[] fields;
+    private Field[][] fields;
     private Button[][] bt;
 
     @Override
@@ -29,16 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        fields = new Field[width * height];
-//        for (int i = 0; i < fields.length; i++) {
-//            fields[i] = new Field(Field.ODKRYTE, i, null);
-//        }
-
-//        FieldAdapter fa = new FieldAdapter(this, fields);
-//        GridView grid = (GridView) findViewById(R.id.grid);
-//        grid.setNumColumns(width);
-//        grid.setAdapter(fa);
-
+        fields = new Field[width][height];
 
         TableLayout table = (TableLayout) findViewById(R.id.grid);
 
@@ -49,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
             for (int c = 0; c < width; c++) {
                 View v = LayoutInflater.from(this).inflate(R.layout.grid_item, null, false);
                 bt[i][c] = (Button) v.findViewById(R.id.field);
+
+
                 row.addView(bt[i][c]);
             }
             table.addView(row);
