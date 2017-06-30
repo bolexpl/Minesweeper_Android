@@ -13,7 +13,7 @@ public class Field {
     public static final int MINA = -1;
     public static final int PUSTE = 0;
 
-    public static final int colors[] = {
+    public static final int COLORS[] = {
             Color.BLUE,
             Color.GREEN,
             Color.RED,

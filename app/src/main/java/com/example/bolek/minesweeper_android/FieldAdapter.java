@@ -59,6 +59,7 @@ public class FieldAdapter extends BaseAdapter {
         }
 
         Button bt = fields[position].getBt();
+        bt.setBackground(mContext.getResources().getDrawable(R.drawable.field_odkryte));
 //        bt.setText(String.valueOf(fields[position].getValue()));
 
         return convertView;

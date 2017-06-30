@@ -23,7 +23,7 @@ public class DebugActivity extends AppCompatActivity {
         bt[7] = (Button) findViewById(R.id.b8);
 
         for(int i=0; i<bt.length;i++){
-            bt[i].setTextColor(Field.colors[i]);
+            bt[i].setTextColor(Field.COLORS[i]);
         }
     }
 }

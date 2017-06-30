@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private int width = 7;
     private int height = 8;
     private int mines = 0;
+    private Field[] fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        Field[] fields = new Field[width * height];
+        fields = new Field[width * height];
         for (int i = 0; i < fields.length; i++) {
             fields[i] = new Field(Field.ODKRYTE, i, null);
         }
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if(id == R.id.debug){
+        } else if (id == R.id.debug) {
             Intent i = new Intent(this, DebugActivity.class);
             startActivity(i);
         }
