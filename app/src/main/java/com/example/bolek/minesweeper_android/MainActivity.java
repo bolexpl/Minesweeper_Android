@@ -2,23 +2,31 @@ package com.example.bolek.minesweeper_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private int width = 7;
-    private int height = 8;
+    private int width = 10;
+    private int height = 10;
     private int mines = 0;
     private Field[][] fields;
     private Button[][] bt;
+
+    private float mx, my;
+    private float curX, curY;
+
+    private HScroll hScroll;
+    private VScroll vScroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,24 +35,37 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         fields = new Field[width][height];
+        bt = new Button[width][height];
+
+        vScroll = (VScroll) findViewById(R.id.vScroll);
+        hScroll = (HScroll) findViewById(R.id.hScroll);
 
         TableLayout table = (TableLayout) findViewById(R.id.grid);
 
-        bt = new Button[height][width];
+        int licznik = 1;
         for (int i = 0; i < height; i++) {
 
             TableRow row = new TableRow(this);
             for (int c = 0; c < width; c++) {
                 View v = LayoutInflater.from(this).inflate(R.layout.grid_item, null, false);
                 bt[i][c] = (Button) v.findViewById(R.id.field);
-
-
-                row.addView(bt[i][c]);
+                bt[i][c].setOnClickListener(this);
+                fields[i][c] = new Field(Field.ZAKRYTE, 0, i, c);
+                bt[i][c].setTag(fields[i][c]);
+                bt[i][c].setText(String.valueOf(licznik++));
+                row.addView(v);
             }
             table.addView(row);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Button bt = (Button) view;
+        bt.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.field_odkryte, null));
+        Field f = (Field) bt.getTag();
+        bt.setText(f.getX() + " " + f.getY());
     }
 
     @Override
@@ -70,5 +91,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                mx = event.getX();
+                my = event.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                curX = event.getX();
+                curY = event.getY();
+                vScroll.scrollBy((int) (mx - curX), (int) (my - curY));
+                hScroll.scrollBy((int) (mx - curX), (int) (my - curY));
+                mx = curX;
+                my = curY;
+                break;
+            case MotionEvent.ACTION_UP:
+                curX = event.getX();
+                curY = event.getY();
+                vScroll.scrollBy((int) (mx - curX), (int) (my - curY));
+                hScroll.scrollBy((int) (mx - curX), (int) (my - curY));
+                break;
+        }
+
+        return true;
     }
 }

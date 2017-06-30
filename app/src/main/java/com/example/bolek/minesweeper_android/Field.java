@@ -1,8 +1,6 @@
 package com.example.bolek.minesweeper_android;
 
-
 import android.graphics.Color;
-import android.widget.Button;
 
 public class Field {
 
@@ -26,13 +24,14 @@ public class Field {
 
     private int state;
     private int value;
+    private int x;
+    private int y;
 
-    private Button bt;
-
-    public Field(int state, int value, Button bt) {
+    public Field(int state, int value, int x, int y) {
         this.state = state;
         this.value = value;
-        this.bt = bt;
+        this.x = x;
+        this.y = y;
     }
 
     public int getState() {
@@ -43,11 +42,19 @@ public class Field {
         return value;
     }
 
-    public void setBt(Button bt) {
-        this.bt = bt;
+    public int getX() {
+        return x;
     }
 
-    public Button getBt() {
-        return bt;
+    public int getY() {
+        return y;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

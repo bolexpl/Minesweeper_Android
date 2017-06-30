@@ -51,17 +51,17 @@ public class FieldAdapter extends BaseAdapter {
 //        }
 //        viewHolder.bt.setText(String.valueOf(fields[position].getValue()));
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.grid_item, parent, false);
-        }
-        if (fields[position].getBt() == null) {
-            fields[position].setBt((Button) convertView.findViewById(R.id.field));
-        }
+//        if (convertView == null) {
+//            convertView = LayoutInflater.from(mContext).inflate(R.layout.grid_item, parent, false);
+//        }
+//        if (fields[position].getBt() == null) {
+//            fields[position].setBt((Button) convertView.findViewById(R.id.field));
+//        }
 
-        Button bt = fields[position].getBt();
+//        Button bt = fields[position].getBt();
 //        bt.setBackground(mContext.getResources().getDrawable(R.drawable.field_odkryte));
 //        bt.setText(String.valueOf(fields[position].getValue()));
 
-        return convertView;
+        return null;
     }
 }
