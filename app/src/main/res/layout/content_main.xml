@@ -10,10 +10,10 @@
     <Button
         android:id="@+id/button"
         style="@style/Field"
-        android:background="@drawable/field_flag"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="87dp" />
+        android:layout_marginStart="87dp"
+        android:background="@drawable/field_flag" />
 
     <Button
         android:id="@+id/button2"
@@ -25,25 +25,59 @@
     <Button
         android:id="@+id/button3"
         style="@style/Field"
-        android:text="1"
-        android:textColor="#0000ff"
-        android:background="@drawable/field_odkryte"
         android:layout_alignParentTop="true"
         android:layout_marginStart="23dp"
-        android:layout_toEndOf="@+id/button2" />
+        android:layout_toEndOf="@+id/button2"
+        android:background="@drawable/field_odkryte"
+        android:text="1"
+        android:textColor="#0000ff" />
 
-    <GridView
-        android:id="@+id/grid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+    <!--<GridView-->
+    <!--android:id="@+id/grid"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/button"-->
+    <!--android:clickable="true"-->
+    <!--android:columnWidth="@dimen/field_width"-->
+    <!--android:gravity="center"-->
+    <!--android:horizontalSpacing="0dp"-->
+    <!--android:verticalSpacing="0dp"-->
+    <!--android:stretchMode="spacingWidth" />-->
+
+    <include layout="@layout/grid_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:layout_below="@+id/button"
-        android:clickable="true"
-        android:columnWidth="@dimen/field_width"
-        android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"
-        android:stretchMode="spacingWidth" />
+        android:layout_alignParentStart="true" />
+
+    <!--<com.example.bolek.minesweeper_android.HScroll-->
+    <!--android:id="@+id/hScroll"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/button">-->
+
+    <!--<com.example.bolek.minesweeper_android.VScroll-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<GridView-->
+    <!--android:id="@+id/grid"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/button"-->
+    <!--android:clickable="true"-->
+    <!--android:columnWidth="@dimen/field_width"-->
+    <!--android:gravity="center"-->
+    <!--android:horizontalSpacing="0dp"-->
+    <!--android:stretchMode="spacingWidth"-->
+    <!--android:verticalSpacing="0dp" />-->
+
+    <!--</com.example.bolek.minesweeper_android.VScroll>-->
+
+    <!--</com.example.bolek.minesweeper_android.HScroll>-->
 
 
 </RelativeLayout>
