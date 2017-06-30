@@ -53,7 +53,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bt[i][c].setOnClickListener(this);
                 fields[i][c] = new Field(Field.ZAKRYTE, 0, i, c);
                 bt[i][c].setTag(fields[i][c]);
-                bt[i][c].setText(String.valueOf(licznik++));
+                if (licznik % 2 == 0) {
+                    bt[i][c].setText(String.valueOf(licznik));
+                }
+                licznik++;
                 row.addView(v);
             }
             table.addView(row);
@@ -95,8 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        float curX, curY;
 
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mx = event.getX();
                 my = event.getY();
@@ -104,16 +108,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case MotionEvent.ACTION_MOVE:
                 curX = event.getX();
                 curY = event.getY();
-                vScroll.scrollBy((int) (mx - curX), (int) (my - curY));
-                hScroll.scrollBy((int) (mx - curX), (int) (my - curY));
+                vScroll.scrollBy(0, (int) (my - curY));
+                hScroll.scrollBy((int) (mx - curX), 0);
                 mx = curX;
                 my = curY;
                 break;
             case MotionEvent.ACTION_UP:
                 curX = event.getX();
                 curY = event.getY();
-                vScroll.scrollBy((int) (mx - curX), (int) (my - curY));
-                hScroll.scrollBy((int) (mx - curX), (int) (my - curY));
+                vScroll.scrollBy(0, (int) (my - curY));
+                hScroll.scrollBy((int) (mx - curX), 0);
                 break;
         }
 
