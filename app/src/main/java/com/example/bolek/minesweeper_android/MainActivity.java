@@ -3,8 +3,6 @@ package com.example.bolek.minesweeper_android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,9 +19,9 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private int width = 8;
-    private int height = 8;
-    private int hardline = 8;
+    private int width = 16;
+    private int height = 30;
+    private int hardline = 30;
     private Field[][] fields;
     private Button[][] bt;
 
@@ -39,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fields = new Field[width][height];
-        bt = new Button[width][height];
+        fields = new Field[height][width];
+        bt = new Button[height][width];
 
         vScroll = (VScroll) findViewById(R.id.vScroll);
         hScroll = (HScroll) findViewById(R.id.hScroll);
@@ -74,9 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Field f = (Field) view.getTag();
 
-        Log.d("click", "onClick");
         if (f.getValue() == Field.NIEOKRESLONE) {
-            Log.d("click", "NIEOKRESLONE");
             generateMines(f.getX(), f.getY());
         }
 //        Button button = (Button) view;
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < width; i++) {
             for (int c = 0; c < height; c++) {
 
-                if (fields[i][c].getValue() != Field.MINA) {
+                if (fields[c][i].getValue() != Field.MINA) {
                     countMines = 0;
                     xmin = (i == 0) ? 0 : i - 1;
                     xmax = (i == width - 1) ? width - 1 : i + 1;
@@ -129,17 +125,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (int j = xmin; j <= xmax; j++) {
                         for (int z = ymin; z <= ymax; z++) {
 
-                            if (fields[j][z].getValue() == Field.MINA) {
+                            if (fields[z][j].getValue() == Field.MINA) {
                                 countMines++;
                             }
                         }
                     }
 
-                    bt[i][c].setBackground(ContextCompat.getDrawable(this, R.drawable.field_odkryte));
-                    fields[i][c].setValue(countMines);
+                    bt[c][i].setBackground(ContextCompat.getDrawable(this, R.drawable.field_odkryte));
+                    fields[c][i].setValue(countMines);
                     if (countMines != 0) {
-                        bt[i][c].setText(String.valueOf(countMines));
-                        bt[i][c].setTextColor(Field.getColor(countMines));
+                        bt[c][i].setText(String.valueOf(countMines));
+                        bt[c][i].setTextColor(Field.getColor(countMines));
                     }
                 }
             }
