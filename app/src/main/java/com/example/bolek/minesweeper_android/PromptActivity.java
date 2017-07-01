@@ -22,10 +22,15 @@ public class PromptActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button button;
 
+    private boolean setted = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prompt);
+
+        Intent i = getIntent();
+        setted = i.getBooleanExtra("setted",false);
 
         width = (EditText) findViewById(R.id.width);
         height = (EditText) findViewById(R.id.height);
@@ -82,7 +87,7 @@ public class PromptActivity extends AppCompatActivity implements View.OnClickLis
             i.putExtra("width", 30);
             i.putExtra("height", 16);
             i.putExtra("mines", 99);
-        } else {
+        } else if (custom.isChecked()) {
             if (width.getText().toString().equals("") ||
                     height.getText().toString().equals("") ||
                     mines.getText().toString().equals("")) {
@@ -102,6 +107,11 @@ public class PromptActivity extends AppCompatActivity implements View.OnClickLis
             i.putExtra("width", w);
             i.putExtra("height", h);
             i.putExtra("mines", m);
+        } else {
+            if(!setted){
+                Toast.makeText(this, "Trzeba wybrać planszę", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         setResult(1, i);
         super.finish();
