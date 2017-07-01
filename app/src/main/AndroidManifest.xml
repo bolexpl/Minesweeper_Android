@@ -23,6 +23,10 @@
             android:name=".RecordsActivity"
             android:label="@string/action_settings"
             android:parentActivityName=".MainActivity"/>
+        <activity android:name=".DebugActivity" />
+        <activity
+            android:name=".PromptActivity"
+            android:label="@string/settings"/>
     </application>
 
 </manifest>

@@ -1,35 +1,38 @@
 package com.example.bolek.minesweeper_android;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.AppCompatButton;
 
-public class Field extends AppCompatButton {
+public class Field {
 
-    private int state;
     public static final int ZAKRYTE = 0;
     public static final int ODKRYTE = 1;
-    public static final int FLAGA = 3;
+    public static final int FLAGA = 2;
 
-    private int value;
+    public static final int NIEOKRESLONE = -2;
     public static final int MINA = -1;
     public static final int PUSTE = 0;
 
-    public Field(Context context, int state, int value) {
-        super(context, null, R.style.Field);
+    public static final int COLORS[] = {
+            Color.BLUE,
+            Color.GREEN,
+            Color.RED,
+            Color.YELLOW,
+            Color.CYAN,
+            Color.MAGENTA,
+            Color.rgb(0xff, 0x7d, 0x0),
+            Color.DKGRAY
+    };
+
+    private int state;
+    private int value;
+    private int x;
+    private int y;
+
+    public Field(int state, int value, int x, int y) {
         this.state = state;
         this.value = value;
-        init();
-    }
-
-    public void init(){
-        setText(String.valueOf(value));
-        if(state == ODKRYTE){
-            setBackgroundColor(Color.LTGRAY);
-        }else{
-            setBackgroundColor(Color.DKGRAY);
-        }
-        setPadding(0,10,0,10);
+        this.x = x;
+        this.y = y;
     }
 
     public int getState() {
@@ -38,5 +41,28 @@ public class Field extends AppCompatButton {
 
     public int getValue() {
         return value;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public static int getColor(int i) {
+        if(i==0){
+            return Color.BLACK;
+        }
+        return COLORS[i - 1];
     }
 }

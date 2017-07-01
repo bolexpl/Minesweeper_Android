@@ -7,26 +7,80 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main">
 
-    <HorizontalScrollView
+    <com.example.bolek.minesweeper_android.HScroll
+        android:id="@+id/hScroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/smile">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+        <com.example.bolek.minesweeper_android.VScroll
+            android:id="@+id/vScroll"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <GridView
+            <TableLayout
                 android:id="@+id/grid"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:columnWidth="500dp"
-                android:clickable="true"
-                android:gravity="center"
-                android:horizontalSpacing="10dp"
-                android:stretchMode="spacingWidthUniform"
-                android:verticalSpacing="10dp" />
-        </LinearLayout>
-    </HorizontalScrollView>
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true" />
+
+        </com.example.bolek.minesweeper_android.VScroll>
+
+    </com.example.bolek.minesweeper_android.HScroll>
+
+    <TextView
+        android:id="@+id/mines_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/hScroll"
+        android:layout_marginBottom="12dp"
+        android:layout_toStartOf="@+id/smile"
+        android:text="@string/left_mines"
+        android:textSize="30sp" />
+
+    <ImageButton
+        android:id="@+id/smile"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/smiley1" />
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/mines_count"
+        android:layout_alignBottom="@+id/mines_count"
+        android:layout_toEndOf="@+id/smile"
+        android:text="@string/time"
+        android:textSize="30sp" />
+
+
+    <!--<com.example.bolek.minesweeper_android.HScroll-->
+    <!--android:id="@+id/hScroll"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/button">-->
+
+    <!--<com.example.bolek.minesweeper_android.VScroll-->
+    <!--android:id="@+id/vScroll"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<TableLayout-->
+    <!--android:id="@+id/grid"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true" />-->
+
+    <!--</com.example.bolek.minesweeper_android.VScroll>-->
+
+    <!--</com.example.bolek.minesweeper_android.HScroll>-->
+
 
 </RelativeLayout>
