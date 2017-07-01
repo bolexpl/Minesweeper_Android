@@ -1,8 +1,10 @@
 package com.example.bolek.minesweeper_android;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,14 +16,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
-    private int width = 16;
-    private int height = 30;
-    private int hardline = 30;
+    private int width = 8;
+    private int height = 8;
+    private int hardline = 8;
+    private int minesFields = hardline;
+    private int emptyFields = (width * height) - hardline;
+    private boolean play = true;
     private Field[][] fields;
     private Button[][] bt;
 
@@ -29,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private VScroll vScroll;
 
     private float mx, my;
+    private boolean touchDown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //TODO nowa gra
 
         fields = new Field[height][width];
         bt = new Button[height][width];
@@ -45,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         TableLayout table = (TableLayout) findViewById(R.id.grid);
         generateBoard(table);
-
-//        generateMines(0, 0);
     }
 
     private void generateBoard(TableLayout table) {
@@ -58,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 View v = LayoutInflater.from(this).inflate(R.layout.grid_item, null, false);
                 bt[i][c] = (Button) v.findViewById(R.id.field);
                 bt[i][c].setOnClickListener(this);
+                bt[i][c].setOnLongClickListener(this);
 
                 fields[i][c] = new Field(Field.ZAKRYTE, Field.NIEOKRESLONE, c, i);
 
@@ -70,15 +78,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        if(!play){
+            return;
+        }
         Field f = (Field) view.getTag();
 
         if (f.getValue() == Field.NIEOKRESLONE) {
             generateMines(f.getX(), f.getY());
         }
-//        Button button = (Button) view;
-//        button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.field_odkryte, null));
-//        Field f = (Field) button.getTag();
-//        button.setText(f.getX() + " " + f.getY());
+
+        if (f.getState() == Field.ODKRYTE && f.getValue() > Field.PUSTE) {
+            discovery(f.getX(), f.getY(), true);
+        } else if (f.getState() == Field.ZAKRYTE || f.getState() == Field.FLAGA) {
+            flag(f.getX(), f.getY());
+        }
+        checkWin();
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        if(!play){
+            return false;
+        }
+        Field f = (Field) view.getTag();
+        if (f.getValue() == Field.NIEOKRESLONE) {
+            generateMines(f.getX(), f.getY());
+        }
+
+        discovery(f.getX(), f.getY(), true);
+        checkWin();
+        return true;
     }
 
     private void generateMines(int xx, int yy) {
@@ -101,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     || (x == xx - 1 && y == yy + 1))
                     ) {
                 fields[y][x].setValue(Field.MINA);
-                bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_mine));
+//                bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_mine));
                 i--;
             }
         }
@@ -131,14 +160,133 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
 
-                    bt[c][i].setBackground(ContextCompat.getDrawable(this, R.drawable.field_odkryte));
                     fields[c][i].setValue(countMines);
-                    if (countMines != 0) {
-                        bt[c][i].setText(String.valueOf(countMines));
-                        bt[c][i].setTextColor(Field.getColor(countMines));
+//                    bt[c][i].setBackground(ContextCompat.getDrawable(this, R.drawable.field_odkryte));
+//                    if (countMines != 0) {
+//                        bt[c][i].setText(String.valueOf(countMines));
+//                        bt[c][i].setTextColor(Field.getColor(countMines));
+//                    }
+                }
+            }
+        }
+    }
+
+    private void discovery(int x, int y, boolean recursive) {
+        if (fields[y][x].getState() == Field.ZAKRYTE) {
+            bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_odkryte));
+            fields[y][x].setState(Field.ODKRYTE);
+
+            if (fields[y][x].getValue() == Field.MINA) {
+
+                onFail(x, y);
+            } else if (fields[y][x].getValue() > Field.PUSTE) {
+
+                bt[y][x].setText(String.valueOf(fields[y][x].getValue()));
+                bt[y][x].setTextColor(Field.getColor(fields[y][x].getValue()));
+                emptyFields--;
+            } else {
+
+                //rekurencja
+                int xmin = (x == 0) ? 0 : x - 1;
+                int xmax = (x == width - 1) ? width - 1 : x + 1;
+
+                int ymin = (y == 0) ? 0 : y - 1;
+                int ymax = (y == height - 1) ? height - 1 : y + 1;
+
+                for (int i = ymin; i <= ymax; i++) {
+                    for (int c = xmin; c <= xmax; c++) {
+                        discovery(c, i, false);
+                    }
+                }
+                emptyFields--;
+            }
+        } else if (fields[y][x].getState() == Field.ODKRYTE
+                && fields[y][x].getValue() > Field.PUSTE && recursive) {
+
+            discoveryNumber(x, y);
+        }
+    }
+
+    private void discoveryNumber(int x, int y) {
+        int xmin = (x == 0) ? 0 : x - 1;
+        int xmax = (x == width - 1) ? width - 1 : x + 1;
+
+        int ymin = (y == 0) ? 0 : y - 1;
+        int ymax = (y == height - 1) ? height - 1 : y + 1;
+
+        int countMines = 0, countFlags = 0;
+        for (int i = ymin; i <= ymax; i++) {
+            for (int c = xmin; c <= xmax; c++) {
+                if (fields[i][c].getState() == Field.FLAGA) {
+                    countFlags++;
+                }
+                if (fields[i][c].getValue() == Field.MINA) {
+                    countMines++;
+                }
+            }
+        }
+        if (countFlags == countMines) {
+            for (int i = ymin; i <= ymax; i++) {
+                for (int c = xmin; c <= xmax; c++) {
+                    if (fields[i][c].getState() == Field.ZAKRYTE) {
+                        discovery(c, i, false);
                     }
                 }
             }
+        }
+    }
+
+    private void onFail(int x, int y) {
+        bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_exploded));
+
+        for (int i = 0; i < height; i++) {
+            for (int c = 0; c < width; c++) {
+                if (fields[i][c].getValue() == Field.MINA && i != y && c != x) {
+                    bt[i][c].setBackground(ContextCompat.getDrawable(this, R.drawable.field_mine));
+                }
+            }
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //TODO nowa gra
+            }
+        });
+        builder.setMessage("Przegrana");
+
+        builder.create().show();
+        play = false;
+    }
+
+    private void checkWin(){
+        if(emptyFields == 0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Wygrana");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //TODO nowa gra
+                }
+            });
+            builder.create().show();
+            play = false;
+        }
+    }
+
+    private void flag(int x, int y) {
+
+        if (fields[y][x].getState() == Field.FLAGA) {
+
+            fields[y][x].setState(Field.ZAKRYTE);
+            bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_zakryte));
+            minesFields++;
+        } else {
+
+            fields[y][x].setState(Field.FLAGA);
+            bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_flag));
+            minesFields--;
         }
     }
 
@@ -167,15 +315,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean down = false;
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float curX, curY;
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_MOVE:
-                if (!down) {
+                if (!touchDown) {
                     mx = event.getX();
                     my = event.getY();
                 }
@@ -185,14 +331,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hScroll.scrollBy((int) (mx - curX), 0);
                 mx = curX;
                 my = curY;
-                down = true;
+                touchDown = true;
                 break;
             case MotionEvent.ACTION_UP:
                 curX = event.getX();
                 curY = event.getY();
                 vScroll.scrollBy(0, (int) (my - curY));
                 hScroll.scrollBy((int) (mx - curX), 0);
-                down = false;
+                touchDown = false;
                 break;
         }
         return true;
