@@ -22,7 +22,7 @@
         <activity android:name=".DebugActivity" />
         <activity
             android:name=".PromptActivity"
-            android:label="@string/new_game"/>
+            android:label="@string/settings"/>
     </application>
 
 </manifest>

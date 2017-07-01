@@ -2,35 +2,37 @@ package com.example.bolek.minesweeper_android;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
-    private int width = 8;
-    private int height = 8;
-    private int hardline = 8;
-    private int minesFields = hardline;
-    private int emptyFields = (width * height) - hardline;
+    private int width = 0;
+    private int height = 0;
+    private int hardline = 0;
+    private int minesFields;
+    private int emptyFields;
     private boolean play = true;
+    private int elapsedTime;
+
+    private TimerThread timerThread;
+
     private Field[][] fields;
     private Button[][] bt;
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private VScroll vScroll;
     private TextView minesText;
     private TextView timerText;
+    private ImageButton smile;
 
     private float mx, my;
     private boolean touchDown = false;
@@ -49,20 +52,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //TODO nowa gra
-
-        fields = new Field[height][width];
-        bt = new Button[height][width];
-
         vScroll = (VScroll) findViewById(R.id.vScroll);
         hScroll = (HScroll) findViewById(R.id.hScroll);
         minesText = (TextView) findViewById(R.id.mines_count);
         timerText = (TextView) findViewById(R.id.timer);
-        minesText.setText(getResources().getString(R.string.left_mines, 0));
-        timerText.setText(getResources().getString(R.string.time, 0));
+        smile = (ImageButton) findViewById(R.id.smile);
+        smile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newGame();
+            }
+        });
 
-        TableLayout table = (TableLayout) findViewById(R.id.grid);
-        generateBoard(table);
+        if (width == 0 || height == 0 || hardline == 0) {
+            Intent i = new Intent(this, PromptActivity.class);
+            startActivityForResult(i, 1);
+        } else {
+            newGame();
+        }
     }
 
     private void generateBoard(TableLayout table) {
@@ -92,10 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         Field f = (Field) view.getTag();
 
-        if (f.getValue() == Field.NIEOKRESLONE) {
-            generateMines(f.getX(), f.getY());
-        }
-
         if (f.getState() == Field.ODKRYTE && f.getValue() > Field.PUSTE) {
             discovery(f.getX(), f.getY(), true);
         } else if (f.getState() == Field.ZAKRYTE || f.getState() == Field.FLAGA) {
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return false;
         }
         Field f = (Field) view.getTag();
-        if (f.getValue() == Field.NIEOKRESLONE) {
+        if (f.getValue() == Field.NIEOKRESLONE && f.getState() == Field.ZAKRYTE) {
             generateMines(f.getX(), f.getY());
         }
 
@@ -139,11 +142,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     || (x == xx - 1 && y == yy + 1))
                     ) {
                 fields[y][x].setValue(Field.MINA);
-//                bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_mine));
                 i--;
             }
         }
         generateNumbers();
+        timerThread = new TimerThread();
+        timerThread.execute();
     }
 
     private void generateNumbers() {
@@ -170,11 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     fields[c][i].setValue(countMines);
-//                    bt[c][i].setBackground(ContextCompat.getDrawable(this, R.drawable.field_odkryte));
-//                    if (countMines != 0) {
-//                        bt[c][i].setText(String.valueOf(countMines));
-//                        bt[c][i].setTextColor(Field.getColor(countMines));
-//                    }
                 }
             }
         }
@@ -257,13 +256,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.new_game), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO nowa gra
+                newGame();
             }
         });
-        builder.setMessage("Przegrana");
+        builder.setMessage(getResources().getString(R.string.lose));
 
         builder.create().show();
         play = false;
@@ -271,12 +270,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void checkWin() {
         if (emptyFields == 0) {
+            timerThread.cancel(true);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Wygrana");
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setMessage(getResources().getString(R.string.win, elapsedTime));
+            builder.setPositiveButton(getResources().getString(R.string.new_game), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    //TODO nowa gra
+                    newGame();
                 }
             });
             builder.create().show();
@@ -297,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             bt[y][x].setBackground(ContextCompat.getDrawable(this, R.drawable.field_flag));
             minesFields--;
         }
+        minesText.setText(getResources().getString(R.string.left_mines, minesFields));
     }
 
     @Override
@@ -307,12 +308,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent i) {
         if (resultCode == 1 && requestCode == 1) {
-            width = 8;
-            height = 8;
-            hardline = 8;
+            width = i.getIntExtra("width", 8);
+            height = i.getIntExtra("height", 8);
+            hardline = i.getIntExtra("mines", 8);
             newGame();
         }
     }
@@ -321,23 +321,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         minesFields = hardline;
         emptyFields = (width * height) - hardline;
         play = true;
+        elapsedTime = 0;
+
+        fields = new Field[height][width];
+        bt = new Button[height][width];
+
+        minesText.setText(getResources().getString(R.string.left_mines, minesFields));
+        timerText.setText(getResources().getString(R.string.time, 0));
+
+        TableLayout table = (TableLayout) findViewById(R.id.grid);
+        table.removeAllViews();
+        generateBoard(table);
+    }
+
+    public void setElapsedTime() {
+        elapsedTime++;
+        timerText.setText(getResources().getString(R.string.time, elapsedTime));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent i = new Intent(this, PromptActivity.class);
-            startActivity(i);
+            startActivityForResult(i, 1);
             return true;
         } else if (id == R.id.debug) {
             Intent i = new Intent(this, DebugActivity.class);
-            startActivityForResult(i, 1);
+            startActivity(i);
             return true;
         }
 
@@ -371,5 +383,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return true;
+    }
+
+    private class TimerThread extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                while (true) {
+                    Thread.sleep(1000);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setElapsedTime();
+                        }
+                    });
+
+                    if (isCancelled()) break;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+
+            }
+            return null;
+        }
     }
 }

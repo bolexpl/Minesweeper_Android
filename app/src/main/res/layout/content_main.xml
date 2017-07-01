@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageButton2">
+        android:layout_below="@+id/smile">
 
         <com.example.bolek.minesweeper_android.VScroll
             android:id="@+id/vScroll"
@@ -33,14 +33,14 @@
         android:id="@+id/mines_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/left_mines"
-        android:textSize="30sp"
         android:layout_above="@+id/hScroll"
-        android:layout_toStartOf="@+id/imageButton2"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="12dp"
+        android:layout_toStartOf="@+id/smile"
+        android:text="@string/left_mines"
+        android:textSize="30sp" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/smile"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
@@ -53,11 +53,11 @@
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/time"
-        android:textSize="30sp"
         android:layout_alignBaseline="@+id/mines_count"
         android:layout_alignBottom="@+id/mines_count"
-        android:layout_toEndOf="@+id/imageButton2" />
+        android:layout_toEndOf="@+id/smile"
+        android:text="@string/time"
+        android:textSize="30sp" />
 
 
     <!--<com.example.bolek.minesweeper_android.HScroll-->
