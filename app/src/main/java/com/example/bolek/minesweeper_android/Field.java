@@ -57,4 +57,8 @@ public class Field {
     public void setValue(int value) {
         this.value = value;
     }
+
+    public static int getColor(int i){
+        return COLORS[i-1];
+    }
 }

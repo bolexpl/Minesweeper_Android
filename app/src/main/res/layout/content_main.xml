@@ -32,25 +32,6 @@
         android:text="1"
         android:textColor="#0000ff" />
 
-    <!--<GridView-->
-    <!--android:id="@+id/grid"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_below="@+id/button"-->
-    <!--android:clickable="true"-->
-    <!--android:columnWidth="@dimen/field_width"-->
-    <!--android:gravity="center"-->
-    <!--android:horizontalSpacing="0dp"-->
-    <!--android:verticalSpacing="0dp"-->
-    <!--android:stretchMode="spacingWidth" />-->
-
-    <!--<include layout="@layout/grid_layout"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_below="@+id/button"-->
-    <!--android:layout_alignParentStart="true" />-->
-
     <com.example.bolek.minesweeper_android.HScroll
         android:id="@+id/hScroll"
         android:layout_width="match_parent"
