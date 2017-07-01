@@ -16,17 +16,16 @@ import android.widget.TableRow;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private int width = 10;
-    private int height = 10;
+    private int width = 30;
+    private int height = 30;
     private int mines = 0;
     private Field[][] fields;
     private Button[][] bt;
 
-    private float mx, my;
-    private float curX, curY;
-
     private HScroll hScroll;
     private VScroll vScroll;
+
+    private float mx, my;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bt[i][c].setOnClickListener(this);
                 fields[i][c] = new Field(Field.ZAKRYTE, 0, i, c);
                 bt[i][c].setTag(fields[i][c]);
-                if (licznik % 2 == 0) {
-                    bt[i][c].setText(String.valueOf(licznik));
-                }
+                bt[i][c].setText(String.valueOf(licznik % 2));
                 licznik++;
                 row.addView(v);
             }
@@ -96,31 +93,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean down = false;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float curX, curY;
 
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mx = event.getX();
-                my = event.getY();
-                break;
+//            case MotionEvent.ACTION_DOWN:
+//                mx = event.getX();
+//                my = event.getY();
+//                break;
             case MotionEvent.ACTION_MOVE:
+                if (!down) {
+                    mx = event.getX();
+                    my = event.getY();
+                }
                 curX = event.getX();
                 curY = event.getY();
                 vScroll.scrollBy(0, (int) (my - curY));
                 hScroll.scrollBy((int) (mx - curX), 0);
                 mx = curX;
                 my = curY;
+                down = true;
                 break;
             case MotionEvent.ACTION_UP:
                 curX = event.getX();
                 curY = event.getY();
                 vScroll.scrollBy(0, (int) (my - curY));
                 hScroll.scrollBy((int) (mx - curX), 0);
+                down = false;
                 break;
         }
-
         return true;
     }
 }
