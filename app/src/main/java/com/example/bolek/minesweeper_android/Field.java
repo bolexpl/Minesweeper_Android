@@ -8,6 +8,7 @@ public class Field {
     public static final int ODKRYTE = 1;
     public static final int FLAGA = 2;
 
+    public static final int NIEOKRESLONE = -2;
     public static final int MINA = -1;
     public static final int PUSTE = 0;
 
@@ -58,7 +59,10 @@ public class Field {
         this.value = value;
     }
 
-    public static int getColor(int i){
-        return COLORS[i-1];
+    public static int getColor(int i) {
+        if(i==0){
+            return Color.BLACK;
+        }
+        return COLORS[i - 1];
     }
 }

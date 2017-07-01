@@ -21,7 +21,6 @@ public class HScroll extends HorizontalScrollView{
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-//        return super.onTouchEvent(ev);
         return false;
     }
 }
