@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Minesweeper_Android</string>
-    <string name="action_settings">Settings</string>
+    <string name="new_game">Nowa gra</string>
+
+    <string name="game_8x8">8x8</string>
+    <string name="game_16x16">16x16</string>
+    <string name="game_30x16">30x16</string>
+    <string name="game_custom">Własne ustawienia</string>
+
+    <string name="input_width">Szerokość</string>
+    <string name="input_height">Wysokość</string>
+    <string name="input_mines">Ilość min</string>
+
+    <string name="button_new_game">Zacznij</string>
+
+    <string name="left_mines">Miny: %1$d</string>
+    <string name="time">Czas: %1$ds</string>
 </resources>

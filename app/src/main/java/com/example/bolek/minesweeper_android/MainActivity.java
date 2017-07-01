@@ -16,7 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private HScroll hScroll;
     private VScroll vScroll;
+    private TextView minesText;
+    private TextView timerText;
 
     private float mx, my;
     private boolean touchDown = false;
@@ -51,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         vScroll = (VScroll) findViewById(R.id.vScroll);
         hScroll = (HScroll) findViewById(R.id.hScroll);
+        minesText = (TextView) findViewById(R.id.mines_count);
+        timerText = (TextView) findViewById(R.id.timer);
+        minesText.setText(getResources().getString(R.string.left_mines, 0));
+        timerText.setText(getResources().getString(R.string.time, 0));
 
         TableLayout table = (TableLayout) findViewById(R.id.grid);
         generateBoard(table);
@@ -78,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(!play){
+        if (!play) {
             return;
         }
         Field f = (Field) view.getTag();
@@ -97,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onLongClick(View view) {
-        if(!play){
+        if (!play) {
             return false;
         }
         Field f = (Field) view.getTag();
@@ -260,8 +269,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         play = false;
     }
 
-    private void checkWin(){
-        if(emptyFields == 0){
+    private void checkWin() {
+        if (emptyFields == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Wygrana");
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -298,6 +307,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1 && requestCode == 1) {
+            width = 8;
+            height = 8;
+            hardline = 8;
+            newGame();
+        }
+    }
+
+    private void newGame() {
+        minesFields = hardline;
+        emptyFields = (width * height) - hardline;
+        play = true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -306,10 +332,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, PromptActivity.class);
+            startActivity(i);
             return true;
         } else if (id == R.id.debug) {
             Intent i = new Intent(this, DebugActivity.class);
-            startActivity(i);
+            startActivityForResult(i, 1);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
