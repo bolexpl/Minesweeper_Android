@@ -83,16 +83,15 @@
         android:id="@+id/button13"
         style="@style/Field"
         android:background="@drawable/field_flag"
-        android:layout_below="@+id/b2"
-        android:layout_toEndOf="@+id/b8"
-        android:layout_marginStart="41dp" />
+        android:layout_alignTop="@+id/b2"
+        android:layout_alignStart="@+id/b8"
+        android:layout_marginTop="29dp" />
 
     <Button
         android:id="@+id/button14"
         style="@style/Field"
         android:background="@drawable/field_zakryte"
-        android:layout_alignBaseline="@+id/b4"
-        android:layout_alignBottom="@+id/b4"
+        android:layout_below="@+id/b3"
         android:layout_alignStart="@+id/button13" />
 
     <Button

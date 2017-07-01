@@ -16,8 +16,8 @@ import android.widget.TableRow;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private int width = 30;
-    private int height = 30;
+    private int width = 16;
+    private int height = 16;
     private int mines = 0;
     private Field[][] fields;
     private Button[][] bt;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bt[i][c].setOnClickListener(this);
                 fields[i][c] = new Field(Field.ZAKRYTE, 0, i, c);
                 bt[i][c].setTag(fields[i][c]);
-                bt[i][c].setText(String.valueOf(licznik % 2));
+                bt[i][c].setText(String.valueOf(licznik % 5));
                 licznik++;
                 row.addView(v);
             }
