@@ -21,9 +21,10 @@
         </activity>
         <activity
             android:name=".RecordsActivity"
-            android:label="@string/action_settings"
+            android:label="@string/records"
             android:parentActivityName=".MainActivity"/>
-        <activity android:name=".DebugActivity" />
+        <activity android:name=".DebugActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".PromptActivity"
             android:label="@string/settings"/>

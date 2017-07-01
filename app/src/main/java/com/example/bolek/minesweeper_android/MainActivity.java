@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (width == 0 || height == 0 || hardline == 0) {
             Intent i = new Intent(this, PromptActivity.class);
-            i.putExtra("setted",!(width == 0 || height == 0 || hardline == 0));
+            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
             startActivityForResult(i, 1);
         } else {
             newGame();
@@ -348,8 +348,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.action_settings) {
             Intent i = new Intent(this, PromptActivity.class);
-            i.putExtra("setted",!(width == 0 || height == 0 || hardline == 0));
+            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
             startActivityForResult(i, 1);
+            return true;
+        } else if (id == R.id.action_records) {
+            Intent i = new Intent(this, RecordsActivity.class);
+            startActivity(i);
             return true;
         } else if (id == R.id.debug) {
             Intent i = new Intent(this, DebugActivity.class);
