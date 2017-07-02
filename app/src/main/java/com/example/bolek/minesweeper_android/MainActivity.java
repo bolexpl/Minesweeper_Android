@@ -1,9 +1,7 @@
 package com.example.bolek.minesweeper_android;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -75,23 +74,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void generateBoard(TableLayout table) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-        for (int i = 0; i < height; i++) {
-            TableRow row = new TableRow(this);
-
-            for (int c = 0; c < width; c++) {
-                View v = LayoutInflater.from(this).inflate(R.layout.grid_item, null, false);
-                bt[i][c] = (Button) v.findViewById(R.id.field);
-                bt[i][c].setOnClickListener(this);
-                bt[i][c].setOnLongClickListener(this);
-
-                fields[i][c] = new Field(Field.ZAKRYTE, Field.NIEOKRESLONE, c, i);
-
-                bt[i][c].setTag(fields[i][c]);
-                row.addView(v);
-            }
-            table.addView(row);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent i) {
+        if (resultCode == 1 && requestCode == 1) {
+            width = i.getIntExtra("width", 8);
+            height = i.getIntExtra("height", 8);
+            hardline = i.getIntExtra("mines", 8);
+            newGame();
         }
     }
 
@@ -122,6 +118,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         discovery(f.getX(), f.getY(), true);
         checkWin();
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent i = new Intent(this, PromptActivity.class);
+            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
+            startActivityForResult(i, 1);
+            return true;
+        } else if (id == R.id.action_records) {
+            Intent i = new Intent(this, RecordsActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.debug) {
+            Intent i = new Intent(this, DebugActivity.class);
+            startActivity(i);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float curX, curY;
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                if (!touchDown) {
+                    mx = event.getX();
+                    my = event.getY();
+                }
+                curX = event.getX();
+                curY = event.getY();
+                vScroll.scrollBy(0, (int) (my - curY));
+                hScroll.scrollBy((int) (mx - curX), 0);
+                mx = curX;
+                my = curY;
+                touchDown = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                curX = event.getX();
+                curY = event.getY();
+                vScroll.scrollBy(0, (int) (my - curY));
+                hScroll.scrollBy((int) (mx - curX), 0);
+                touchDown = false;
+                break;
+        }
         return true;
     }
 
@@ -258,16 +305,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        timerThread.cancel(true);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton(getResources().getString(R.string.new_game), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                newGame();
-            }
-        });
+        builder.setPositiveButton(getResources().getString(R.string.ok), null);
         builder.setMessage(getResources().getString(R.string.lose));
 
         builder.create().show();
+        smile.setImageResource(R.drawable.smiley3);
         play = false;
     }
 
@@ -276,13 +320,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             timerThread.cancel(true);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(getResources().getString(R.string.win, elapsedTime));
-            builder.setPositiveButton(getResources().getString(R.string.new_game), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    newGame();
-                }
-            });
+            builder.setPositiveButton(getResources().getString(R.string.ok), null);
             builder.create().show();
+            smile.setImageResource(R.drawable.smiley);
             play = false;
         }
     }
@@ -303,23 +343,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         minesText.setText(getResources().getString(R.string.left_mines, minesFields));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent i) {
-        if (resultCode == 1 && requestCode == 1) {
-            width = i.getIntExtra("width", 8);
-            height = i.getIntExtra("height", 8);
-            hardline = i.getIntExtra("mines", 8);
-            newGame();
-        }
-    }
-
     private void newGame() {
         minesFields = hardline;
         emptyFields = (width * height) - hardline;
@@ -329,68 +352,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fields = new Field[height][width];
         bt = new Button[height][width];
 
+        if(timerThread != null){
+            timerThread.cancel(true);
+        }
+
         minesText.setText(getResources().getString(R.string.left_mines, minesFields));
         timerText.setText(getResources().getString(R.string.time, 0));
+
+        smile.setImageResource(R.drawable.smiley1);
 
         TableLayout table = (TableLayout) findViewById(R.id.grid);
         table.removeAllViews();
         generateBoard(table);
     }
 
+    private void generateBoard(TableLayout table) {
+
+        for (int i = 0; i < height; i++) {
+            TableRow row = new TableRow(this);
+
+            for (int c = 0; c < width; c++) {
+                View v = LayoutInflater.from(this).inflate(R.layout.grid_item, null, false);
+                bt[i][c] = (Button) v.findViewById(R.id.field);
+                bt[i][c].setOnClickListener(this);
+                bt[i][c].setOnLongClickListener(this);
+
+                fields[i][c] = new Field(Field.ZAKRYTE, Field.NIEOKRESLONE, c, i);
+
+                bt[i][c].setTag(fields[i][c]);
+                row.addView(v);
+            }
+            table.addView(row);
+        }
+
+    }
+
     public void setElapsedTime() {
         elapsedTime++;
         timerText.setText(getResources().getString(R.string.time, elapsedTime));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            Intent i = new Intent(this, PromptActivity.class);
-            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
-            startActivityForResult(i, 1);
-            return true;
-        } else if (id == R.id.action_records) {
-            Intent i = new Intent(this, RecordsActivity.class);
-            startActivity(i);
-            return true;
-        } else if (id == R.id.debug) {
-            Intent i = new Intent(this, DebugActivity.class);
-            startActivity(i);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float curX, curY;
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_MOVE:
-                if (!touchDown) {
-                    mx = event.getX();
-                    my = event.getY();
-                }
-                curX = event.getX();
-                curY = event.getY();
-                vScroll.scrollBy(0, (int) (my - curY));
-                hScroll.scrollBy((int) (mx - curX), 0);
-                mx = curX;
-                my = curY;
-                touchDown = true;
-                break;
-            case MotionEvent.ACTION_UP:
-                curX = event.getX();
-                curY = event.getY();
-                vScroll.scrollBy(0, (int) (my - curY));
-                hScroll.scrollBy((int) (mx - curX), 0);
-                touchDown = false;
-                break;
-        }
-        return true;
     }
 
     private class TimerThread extends AsyncTask<Void, Void, Void> {
