@@ -43,6 +43,10 @@ public class RecordAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public List<Record> getData() {
+        return data;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item, parent, false);
@@ -57,10 +61,6 @@ public class RecordAdapter extends RecyclerView.Adapter {
         holder.time.setText(context.getResources().getString(R.string.record_time, r.getCzas()));
         holder.player.setText(r.getLogin());
         holder.board.setText(r.getBoard());
-    }
-
-    private Record getRecord(int i) {
-        return data.get(i);
     }
 
     @Override
