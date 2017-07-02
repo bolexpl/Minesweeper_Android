@@ -1,4 +1,4 @@
-package com.example.bolek.minesweeper_android;
+package com.example.bolek.minesweeper_android.model;
 
 import com.example.bolek.minesweeper_android.pojo.JSONResponse;
 

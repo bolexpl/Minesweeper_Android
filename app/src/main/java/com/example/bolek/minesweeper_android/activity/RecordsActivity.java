@@ -1,5 +1,6 @@
 package com.example.bolek.minesweeper_android.activity;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,8 +13,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import com.example.bolek.minesweeper_android.ApiService;
-import com.example.bolek.minesweeper_android.ApiUtils;
+import com.example.bolek.minesweeper_android.model.ApiService;
+import com.example.bolek.minesweeper_android.model.ApiUtils;
 import com.example.bolek.minesweeper_android.R;
 import com.example.bolek.minesweeper_android.RecordAdapter;
 import com.example.bolek.minesweeper_android.pojo.*;
@@ -26,6 +27,7 @@ public class RecordsActivity extends AppCompatActivity {
 
     private RecordAdapter adapter;
     private ApiService service;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,14 @@ public class RecordsActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
         recyclerView.addItemDecoration(decoration);
         recyclerView.setAdapter(adapter);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
 
         loadData();
     }
@@ -69,5 +79,6 @@ public class RecordsActivity extends AppCompatActivity {
                 Log.d("retrofit", t.getMessage());
             }
         });
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

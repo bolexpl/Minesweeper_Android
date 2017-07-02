@@ -1,7 +1,5 @@
 package com.example.bolek.minesweeper_android.model;
 
-import com.example.bolek.minesweeper_android.ApiUtils;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

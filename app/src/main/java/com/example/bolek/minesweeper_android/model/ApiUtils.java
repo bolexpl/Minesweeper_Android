@@ -1,6 +1,4 @@
-package com.example.bolek.minesweeper_android;
-
-import com.example.bolek.minesweeper_android.model.RetrofitClient;
+package com.example.bolek.minesweeper_android.model;
 
 public class ApiUtils {
 
