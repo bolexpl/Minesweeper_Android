@@ -1,24 +1,36 @@
 package com.example.bolek.minesweeper_android.pojo;
 
-public class Record {
-    private int id;
-    private int user_id;
-    private int czas;
-    private String board;
-    private String login;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public Record(int id, int user_id, int czas, String board, String login) {
+public class Record {
+
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("user_id")
+    @Expose
+    private int userId;
+    @SerializedName("czas")
+    @Expose
+    private int czas;
+    @SerializedName("board")
+    @Expose
+    private String board;
+    @SerializedName("login")
+    @Expose
+    private String login;
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
+
+    public Record(int id, int userId, int czas, String board, String login, String avatar) {
         this.id = id;
-        this.user_id = user_id;
+        this.userId = userId;
         this.czas = czas;
         this.board = board;
         this.login = login;
-    }
-
-    public Record(int id, int czas, String board) {
-        this.id = id;
-        this.czas = czas;
-        this.board = board;
+        this.avatar = avatar;
     }
 
     public int getId() {
@@ -29,12 +41,12 @@ public class Record {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getCzas() {
@@ -59,5 +71,13 @@ public class Record {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

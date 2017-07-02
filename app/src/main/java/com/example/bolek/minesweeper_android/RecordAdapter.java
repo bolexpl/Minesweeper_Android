@@ -10,10 +10,11 @@ import android.widget.TextView;
 import com.example.bolek.minesweeper_android.pojo.Record;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecordAdapter extends RecyclerView.Adapter {
 
-    private ArrayList<Record> data;
+    private List<Record> data;
     private Context context;
 
     private class RecordViewHolder extends RecyclerView.ViewHolder {
@@ -23,7 +24,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
         TextView player;
         TextView board;
 
-        public RecordViewHolder(View itemView) {
+        RecordViewHolder(View itemView) {
             super(itemView);
             nr = (TextView) itemView.findViewById(R.id.nr);
             time = (TextView) itemView.findViewById(R.id.time);
@@ -37,6 +38,11 @@ public class RecordAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
+    public void update(List<Record> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item, parent, false);
@@ -47,10 +53,14 @@ public class RecordAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder h, int position) {
         Record r = data.get(position);
         RecordViewHolder holder = (RecordViewHolder) h;
-        holder.nr.setText(context.getResources().getString(R.string.record_number,position+1));
-        holder.time.setText(context.getResources().getString(R.string.record_time,r.getCzas()));
+        holder.nr.setText(context.getResources().getString(R.string.record_number, position + 1));
+        holder.time.setText(context.getResources().getString(R.string.record_time, r.getCzas()));
         holder.player.setText(r.getLogin());
         holder.board.setText(r.getBoard());
+    }
+
+    private Record getRecord(int i) {
+        return data.get(i);
     }
 
     @Override

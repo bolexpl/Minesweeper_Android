@@ -1,8 +1,10 @@
 package com.example.bolek.minesweeper_android.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.Manifest;
 
 import com.example.bolek.minesweeper_android.Field;
 import com.example.bolek.minesweeper_android.HScroll;
@@ -55,6 +58,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.INTERNET
+            }, 1);
+        }
 
         Intent i2 = new Intent(this, RecordsActivity.class);
         startActivity(i2);
@@ -138,10 +147,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         } else if (id == R.id.action_records) {
             Intent i = new Intent(this, RecordsActivity.class);
-            startActivity(i);
-            return true;
-        } else if (id == R.id.debug) {
-            Intent i = new Intent(this, DebugActivity.class);
             startActivity(i);
             return true;
         }
@@ -358,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fields = new Field[height][width];
         bt = new Button[height][width];
 
-        if(timerThread != null){
+        if (timerThread != null) {
             timerThread.cancel(true);
         }
 
