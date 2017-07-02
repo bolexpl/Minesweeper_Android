@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bolek.minesweeper_android.RecordsActivity">
+    tools:context="com.example.bolek.minesweeper_android.activity.RecordsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,12 +20,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TableLayout
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/table"
+        android:id="@+id/recycler"
         android:layout_marginTop="?attr/actionBarSize"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_height="match_parent" />
+
 
 </android.support.design.widget.CoordinatorLayout>

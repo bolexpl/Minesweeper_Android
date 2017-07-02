@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bolek.minesweeper_android.PromptActivity">
+    tools:context="com.example.bolek.minesweeper_android.activity.PromptActivity">
 
     <RadioGroup
         android:layout_width="wrap_content"

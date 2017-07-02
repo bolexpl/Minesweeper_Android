@@ -1,8 +1,11 @@
-package com.example.bolek.minesweeper_android;
+package com.example.bolek.minesweeper_android.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.bolek.minesweeper_android.Field;
+import com.example.bolek.minesweeper_android.R;
 
 public class DebugActivity extends AppCompatActivity {
 

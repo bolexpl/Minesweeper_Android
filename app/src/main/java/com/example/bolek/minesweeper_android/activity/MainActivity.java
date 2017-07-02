@@ -1,7 +1,6 @@
-package com.example.bolek.minesweeper_android;
+package com.example.bolek.minesweeper_android.activity;
 
 import android.content.Intent;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -18,7 +17,11 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.bolek.minesweeper_android.Field;
+import com.example.bolek.minesweeper_android.HScroll;
+import com.example.bolek.minesweeper_android.R;
+import com.example.bolek.minesweeper_android.VScroll;
 
 import java.util.Random;
 
@@ -53,25 +56,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        vScroll = (VScroll) findViewById(R.id.vScroll);
-        hScroll = (HScroll) findViewById(R.id.hScroll);
-        minesText = (TextView) findViewById(R.id.mines_count);
-        timerText = (TextView) findViewById(R.id.timer);
-        smile = (ImageButton) findViewById(R.id.smile);
-        smile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newGame();
-            }
-        });
+        Intent i2 = new Intent(this, RecordsActivity.class);
+        startActivity(i2);
 
-        if (width == 0 || height == 0 || hardline == 0) {
-            Intent i = new Intent(this, PromptActivity.class);
-            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
-            startActivityForResult(i, 1);
-        } else {
-            newGame();
-        }
+//        vScroll = (VScroll) findViewById(R.id.vScroll);
+//        hScroll = (HScroll) findViewById(R.id.hScroll);
+//        minesText = (TextView) findViewById(R.id.mines_count);
+//        timerText = (TextView) findViewById(R.id.timer);
+//        smile = (ImageButton) findViewById(R.id.smile);
+//        smile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                newGame();
+//            }
+//        });
+//
+//        if (width == 0 || height == 0 || hardline == 0) {
+//            Intent i = new Intent(this, PromptActivity.class);
+//            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
+//            startActivityForResult(i, 1);
+//        } else {
+//            newGame();
+//        }
     }
 
     @Override

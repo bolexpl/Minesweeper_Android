@@ -22,4 +22,7 @@
     <string name="lose">Przegrana</string>
     <string name="ok">OK</string>
 
+    <string name="record_number">%1$d.</string>
+    <string name="record_time">%1$ds</string>
+
 </resources>
