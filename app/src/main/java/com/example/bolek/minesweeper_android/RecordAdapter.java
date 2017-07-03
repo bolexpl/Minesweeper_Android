@@ -2,11 +2,15 @@ package com.example.bolek.minesweeper_android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.bolek.minesweeper_android.model.ApiUtils;
 import com.example.bolek.minesweeper_android.pojo.Record;
 
 import java.util.ArrayList;
@@ -23,6 +27,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
         TextView time;
         TextView player;
         TextView board;
+        ImageView avatar;
 
         RecordViewHolder(View itemView) {
             super(itemView);
@@ -30,6 +35,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
             time = (TextView) itemView.findViewById(R.id.time);
             player = (TextView) itemView.findViewById(R.id.player);
             board = (TextView) itemView.findViewById(R.id.board);
+            avatar = (ImageView) itemView.findViewById(R.id.avatar);
         }
     }
 
@@ -61,6 +67,13 @@ public class RecordAdapter extends RecyclerView.Adapter {
         holder.time.setText(context.getResources().getString(R.string.record_time, r.getCzas()));
         holder.player.setText(r.getLogin());
         holder.board.setText(r.getBoard());
+
+        if (r.getAvatar().equals("no_avatar.png")) {
+            holder.avatar.setImageDrawable(context.getResources().getDrawable(R.drawable.no_avatar));
+        } else {
+            Glide.with(context).load(ApiUtils.getAvatarUrl(r.getAvatar())).into(holder.avatar);
+            Log.d("Glide",ApiUtils.getAvatarUrl(r.getAvatar()));
+        }
     }
 
     @Override

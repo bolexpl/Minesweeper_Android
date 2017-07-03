@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
@@ -8,22 +9,22 @@
         android:id="@+id/nr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:text="1."
         android:textColor="@color/background"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/nr"
         android:text="czas"
         android:textColor="@color/background"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/nr"
-        android:layout_marginStart="14dp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/player"
@@ -31,16 +32,26 @@
         android:layout_height="wrap_content"
         android:text="gracz"
         android:textSize="20sp"
-        android:layout_alignBaseline="@+id/board"
-        android:layout_alignBottom="@+id/board"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/avatar" />
 
     <TextView
         android:id="@+id/board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="plansza"
-        android:textSize="20sp"
+        android:layout_alignStart="@+id/time"
         android:layout_below="@+id/time"
-        android:layout_alignStart="@+id/time" />
+        android:text="plansza"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/avatar"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/no_avatar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

@@ -28,4 +28,6 @@
     <string name="api_error">Błąd: %1$d</string>
     <string name="api_error2">Błąd pobrania danych</string>
 
+    <string name="avatar">Avatar</string>
+
 </resources>
