@@ -3,10 +3,19 @@
     <string name="records">Wyniki</string>
     <string name="settings">Ustawienia</string>
 
+    <string name="game_all">Wszystkie</string>
     <string name="game_8x8">8x8</string>
     <string name="game_16x16">16x16</string>
     <string name="game_30x16">30x16</string>
     <string name="game_custom">Własne ustawienia</string>
+
+    <string-array name="filter">
+        <item>Wszystkie</item>
+        <item>8x8</item>
+        <item>16x16</item>
+        <item>30x16</item>
+        <item>Własne ustawienia</item>
+    </string-array>
 
     <string name="input_width">Szerokość</string>
     <string name="input_height">Wysokość</string>
@@ -29,5 +38,6 @@
     <string name="api_error2">Błąd pobrania danych</string>
 
     <string name="avatar">Avatar</string>
+    <string name="spinner_title">Plansza</string>
 
 </resources>

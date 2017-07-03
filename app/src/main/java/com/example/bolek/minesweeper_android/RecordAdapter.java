@@ -68,9 +68,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
         holder.player.setText(r.getLogin());
         holder.board.setText(r.getBoard());
 
-        if (r.getAvatar().equals("no_avatar.png")) {
-            holder.avatar.setImageDrawable(context.getResources().getDrawable(R.drawable.no_avatar));
-        } else {
+        if (!r.getAvatar().equals("no_avatar.png")) {
             Glide.with(context).load(ApiUtils.getAvatarUrl(r.getAvatar())).into(holder.avatar);
             Log.d("Glide",ApiUtils.getAvatarUrl(r.getAvatar()));
         }

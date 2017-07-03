@@ -3,6 +3,7 @@ package com.example.bolek.minesweeper_android.model;
 public class ApiUtils {
 
     public static String BASE_URL = "http://192.168.0.11/";
+    public static final String[] FILTERS = {"all", "8x8", "16x16", "30x16", "custom"};
 
     public static ApiService getApiService() {
         return RetrofitClient.getClient().create(ApiService.class);

@@ -7,8 +7,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,24 +31,35 @@ public class RecordsActivity extends AppCompatActivity {
     private RecordAdapter adapter;
     private ApiService service;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private int filterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        ArrayAdapter<String> filterAdapter = new ArrayAdapter<String>(RecordsActivity.this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.filter));
+        filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(filterAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("spinner", ApiUtils.FILTERS[i]);
+                filterId = i;
+                loadData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         adapter = new RecordAdapter(new ArrayList<Record>(0), this);
         service = ApiUtils.getApiService();
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.ItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
-        recyclerView.addItemDecoration(decoration);
-        recyclerView.setAdapter(adapter);
-
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -54,11 +68,19 @@ public class RecordsActivity extends AppCompatActivity {
             }
         });
 
-        loadData();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.ItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
+        recyclerView.addItemDecoration(decoration);
+        recyclerView.setAdapter(adapter);
+
+//        loadData();
     }
 
     private void loadData() {
-        service.getRecords().enqueue(new Callback<JSONResponse>() {
+        service.getRecords(ApiUtils.FILTERS[filterId]).enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 if (response.isSuccessful()) {
@@ -66,7 +88,6 @@ public class RecordsActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.api_error,
                             response.code()), Toast.LENGTH_SHORT).show();
-                    Log.d("retrofit", response.toString());
                 }
             }
 
@@ -74,9 +95,6 @@ public class RecordsActivity extends AppCompatActivity {
             public void onFailure(Call<JSONResponse> c, Throwable t) {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.api_error2),
                         Toast.LENGTH_SHORT).show();
-                Log.d("retrofit", t.toString());
-                Log.d("retrofit", t.getLocalizedMessage());
-                Log.d("retrofit", t.getMessage());
             }
         });
         swipeRefreshLayout.setRefreshing(false);

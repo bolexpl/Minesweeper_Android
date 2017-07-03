@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                newGame();
 //            }
 //        });
-//
 //        if (width == 0 || height == 0 || hardline == 0) {
 //            Intent i = new Intent(this, PromptActivity.class);
 //            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
