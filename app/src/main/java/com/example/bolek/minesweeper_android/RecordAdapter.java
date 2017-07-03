@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class RecordAdapter extends RecyclerView.Adapter {
 
-    private List<Record> data;
+    private List<Record> data = new ArrayList<>();
     private Context context;
 
     private class RecordViewHolder extends RecyclerView.ViewHolder {
@@ -44,8 +45,13 @@ public class RecordAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
-    public void update(List<Record> data) {
+    public void setData(List<Record> data) {
         this.data = data;
+        notifyDataSetChanged();
+    }
+
+    public void updateData(List<Record> data) {
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -62,6 +68,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder h, int position) {
         Record r = data.get(position);
+
         RecordViewHolder holder = (RecordViewHolder) h;
         holder.nr.setText(context.getResources().getString(R.string.record_number, position + 1));
         holder.time.setText(context.getResources().getString(R.string.record_time, r.getCzas()));
@@ -70,7 +77,6 @@ public class RecordAdapter extends RecyclerView.Adapter {
 
         if (!r.getAvatar().equals("no_avatar.png")) {
             Glide.with(context).load(ApiUtils.getAvatarUrl(r.getAvatar())).into(holder.avatar);
-            Log.d("Glide",ApiUtils.getAvatarUrl(r.getAvatar()));
         }
     }
 

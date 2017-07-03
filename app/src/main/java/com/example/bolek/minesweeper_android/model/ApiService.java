@@ -15,8 +15,8 @@ public interface ApiService {
     Call<JSONResponse> getRecords(@Query("board") String board);
 
     @GET("/Minesweeper_PHP/api/records.php")
-    Call<JSONResponse> getRecords(@Query("page") String page, @Query("limit") String limit);
+    Call<JSONResponse> getRecords(@Query("page") int page, @Query("limit") int limit);
 
     @GET("/Minesweeper_PHP/api/records.php")
-    Call<JSONResponse> getRecords(@Query("board") String board, @Query("page") String page, @Query("limit") String limit);
+    Call<JSONResponse> getRecords(@Query("board") String board, @Query("page") int page, @Query("limit") int limit);
 }
