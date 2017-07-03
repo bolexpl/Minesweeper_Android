@@ -138,6 +138,7 @@ public class RecordsActivity extends AppCompatActivity {
         service.getRecords(ApiUtils.FILTERS[filterId], page, limit).enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+
                 Log.d("retrofit", response.toString());
                 if (response.isSuccessful()) {
                     if(response.body().getData().size() != 0){

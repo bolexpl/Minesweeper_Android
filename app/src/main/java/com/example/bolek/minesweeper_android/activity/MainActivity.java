@@ -65,27 +65,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }, 1);
         }
 
-        Intent i2 = new Intent(this, RecordsActivity.class);
-        startActivity(i2);
-
-//        vScroll = (VScroll) findViewById(R.id.vScroll);
-//        hScroll = (HScroll) findViewById(R.id.hScroll);
-//        minesText = (TextView) findViewById(R.id.mines_count);
-//        timerText = (TextView) findViewById(R.id.timer);
-//        smile = (ImageButton) findViewById(R.id.smile);
-//        smile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                newGame();
-//            }
-//        });
-//        if (width == 0 || height == 0 || hardline == 0) {
-//            Intent i = new Intent(this, PromptActivity.class);
-//            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
-//            startActivityForResult(i, 1);
-//        } else {
-//            newGame();
-//        }
+        vScroll = (VScroll) findViewById(R.id.vScroll);
+        hScroll = (HScroll) findViewById(R.id.hScroll);
+        minesText = (TextView) findViewById(R.id.mines_count);
+        timerText = (TextView) findViewById(R.id.timer);
+        smile = (ImageButton) findViewById(R.id.smile);
+        smile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newGame();
+            }
+        });
+        if (width == 0 || height == 0 || hardline == 0) {
+            Intent i = new Intent(this, PromptActivity.class);
+            i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
+            startActivityForResult(i, 1);
+        } else {
+            newGame();
+        }
     }
 
     @Override
