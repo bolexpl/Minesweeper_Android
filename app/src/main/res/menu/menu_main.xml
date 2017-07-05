@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="@string/records"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="100"
+        android:title="@string/title_activity_login"
+        app:showAsAction="never" />
 </menu>
