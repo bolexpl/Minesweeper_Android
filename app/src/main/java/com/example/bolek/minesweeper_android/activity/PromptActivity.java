@@ -1,4 +1,4 @@
-package com.example.bolek.minesweeper_android;
+package com.example.bolek.minesweeper_android.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.example.bolek.minesweeper_android.R;
 
 public class PromptActivity extends AppCompatActivity implements View.OnClickListener {
 

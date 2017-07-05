@@ -1,9 +1,10 @@
-package com.example.bolek.minesweeper_android;
+package com.example.bolek.minesweeper_android.activity;
 
 import android.content.Intent;
-import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,12 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.Manifest;
+
+import com.example.bolek.minesweeper_android.Field;
+import com.example.bolek.minesweeper_android.HScroll;
+import com.example.bolek.minesweeper_android.R;
+import com.example.bolek.minesweeper_android.VScroll;
 
 import java.util.Random;
 
@@ -53,6 +59,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.INTERNET
+            }, 1);
+        }
+
         vScroll = (VScroll) findViewById(R.id.vScroll);
         hScroll = (HScroll) findViewById(R.id.hScroll);
         minesText = (TextView) findViewById(R.id.mines_count);
@@ -64,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 newGame();
             }
         });
-
         if (width == 0 || height == 0 || hardline == 0) {
             Intent i = new Intent(this, PromptActivity.class);
             i.putExtra("setted", !(width == 0 || height == 0 || hardline == 0));
@@ -134,10 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, RecordsActivity.class);
             startActivity(i);
             return true;
-        } else if (id == R.id.debug) {
-            Intent i = new Intent(this, DebugActivity.class);
-            startActivity(i);
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -195,6 +202,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 i--;
             }
         }
+//        fields[0][3].setValue(Field.MINA);
+//        fields[1][2].setValue(Field.MINA);
+//        fields[1][6].setValue(Field.MINA);
+//        fields[1][7].setValue(Field.MINA);
+//        fields[2][0].setValue(Field.MINA);
+//        fields[2][2].setValue(Field.MINA);
+//        fields[3][5].setValue(Field.MINA);
+//        fields[3][6].setValue(Field.MINA);
+//        fields[4][5].setValue(Field.MINA);
+//        fields[2][5].setValue(Field.MINA);
+
         generateNumbers();
         timerThread = new TimerThread();
         timerThread.execute();
@@ -299,8 +317,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < height; i++) {
             for (int c = 0; c < width; c++) {
-                if (fields[i][c].getValue() == Field.MINA && i != y && c != x) {
+                if (fields[i][c].getState() == Field.ZAKRYTE
+                        && fields[i][c].getValue() == Field.MINA
+                        && !(i == y && c == x)) {
                     bt[i][c].setBackground(ContextCompat.getDrawable(this, R.drawable.field_mine));
+                } else if (fields[i][c].getState() == Field.FLAGA && fields[i][c].getValue() != Field.MINA) {
+                    bt[i][c].setBackground(ContextCompat.getDrawable(this, R.drawable.field_flag_fail));
                 }
             }
         }
@@ -352,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fields = new Field[height][width];
         bt = new Button[height][width];
 
-        if(timerThread != null){
+        if (timerThread != null) {
             timerThread.cancel(true);
         }
 

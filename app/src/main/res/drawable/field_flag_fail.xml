@@ -13,8 +13,8 @@
 
                     <gradient
                         android:angle="315"
-                        android:endColor="#2b2b2b"
-                        android:startColor="#151515"
+                        android:endColor="#9c0000"
+                        android:startColor="#a90404"
                         android:type="linear" />
 
                     <stroke
@@ -24,7 +24,7 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/mine" />
+            <item android:drawable="@drawable/flag" />
 
         </layer-list>
     </item>
@@ -40,8 +40,8 @@
 
                     <gradient
                         android:angle="315"
-                        android:endColor="#252525"
-                        android:startColor="#666666"
+                        android:endColor="#fd0000"
+                        android:startColor="#ff2323"
                         android:type="linear" />
 
                     <stroke
@@ -51,7 +51,7 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/mine" />
+            <item android:drawable="@drawable/flag" />
 
         </layer-list>
     </item>
