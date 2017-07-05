@@ -55,4 +55,6 @@
     <string name="permission_rationale">"Uprawnienie odczytu kontaktów jest wymagane do autouzupełniania emaila."</string>
     <!--"Contacts permissions are needed for providing email completions."-->
 
+    <string name="input_required">To pole jest wymagane</string>
+
 </resources>

@@ -15,7 +15,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText login;
     private EditText password;
-    private Button btLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +24,14 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         login = (EditText) findViewById(R.id.login);
         password = (EditText) findViewById(R.id.password);
-        btLogin = (Button) findViewById(R.id.login_button);
+
+        Button btLogin = (Button) findViewById(R.id.login_button);
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValid()) login();
             }
         });
-
         Button btRegister = (Button) findViewById(R.id.register_button);
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,16 +39,15 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO register
             }
         });
-
     }
 
     private boolean isValid() {
         if (login.getText().toString().trim().equals("")) {
-            login.setError("Źle");
+            login.setError(getResources().getString(R.string.input_required));
             return false;
         }
         if (password.getText().toString().trim().equals("")) {
-            password.setError("Źle");
+            password.setError(getResources().getString(R.string.input_required));
             return false;
         }
         return true;
