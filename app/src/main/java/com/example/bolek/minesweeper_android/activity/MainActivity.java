@@ -202,6 +202,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 i--;
             }
         }
+//        fields[0][3].setValue(Field.MINA);
+//        fields[1][2].setValue(Field.MINA);
+//        fields[1][6].setValue(Field.MINA);
+//        fields[1][7].setValue(Field.MINA);
+//        fields[2][0].setValue(Field.MINA);
+//        fields[2][2].setValue(Field.MINA);
+//        fields[3][5].setValue(Field.MINA);
+//        fields[3][6].setValue(Field.MINA);
+//        fields[4][5].setValue(Field.MINA);
+//        fields[2][5].setValue(Field.MINA);
+
         generateNumbers();
         timerThread = new TimerThread();
         timerThread.execute();
@@ -306,8 +317,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < height; i++) {
             for (int c = 0; c < width; c++) {
-                if (fields[i][c].getValue() == Field.MINA && i != y && c != x) {
+                if (fields[i][c].getState() == Field.ZAKRYTE
+                        && fields[i][c].getValue() == Field.MINA
+                        && !(i == y && c == x)) {
                     bt[i][c].setBackground(ContextCompat.getDrawable(this, R.drawable.field_mine));
+                } else if (fields[i][c].getState() == Field.FLAGA && fields[i][c].getValue() != Field.MINA) {
+                    bt[i][c].setBackground(ContextCompat.getDrawable(this, R.drawable.field_flag_fail));
                 }
             }
         }
