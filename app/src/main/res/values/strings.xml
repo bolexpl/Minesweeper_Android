@@ -43,7 +43,7 @@
     <string name="title_activity_login">Logowanie</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_login">Email lub login</string>
     <string name="prompt_password">Hasło</string>
     <string name="action_sign_in">Zaloguj lub zarejestruj</string>
     <string name="action_register">Zarejestruj</string>

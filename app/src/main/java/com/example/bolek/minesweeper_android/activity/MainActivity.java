@@ -145,8 +145,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, RecordsActivity.class);
             startActivity(i);
             return true;
-        } else if(id==R.id.action_login){
+        } else if (id == R.id.action_login) {
             Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.action_login2) {
+            Intent i = new Intent(this, Login2Activity.class);
             startActivity(i);
             return true;
         }
