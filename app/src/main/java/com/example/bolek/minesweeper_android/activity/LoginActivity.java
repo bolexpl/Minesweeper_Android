@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 if (response.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
+                    //TODO zapisać dane gracza
                     finish();
                 } else {
                     progressBar.setVisibility(View.GONE);
