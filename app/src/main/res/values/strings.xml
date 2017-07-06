@@ -35,7 +35,7 @@
     <string name="record_time">%1$ds</string>
 
     <string name="api_error">Błąd: %1$d</string>
-    <string name="api_error2">Błąd pobrania danych</string>
+    <string name="api_error2">Błąd połączenia</string>
 
     <string name="avatar">Avatar</string>
     <string name="spinner_title">Plansza</string>
@@ -56,5 +56,6 @@
     <!--"Contacts permissions are needed for providing email completions."-->
 
     <string name="input_required">To pole jest wymagane</string>
+    <string name="login_success">Zalogowano</string>
 
 </resources>

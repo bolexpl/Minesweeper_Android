@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+//        Intent log = new Intent(this, LoginActivity.class);
+//        startActivity(log);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.INTERNET
@@ -147,10 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         } else if (id == R.id.action_login) {
             Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            return true;
-        } else if (id == R.id.action_login2) {
-            Intent i = new Intent(this, Login2Activity.class);
             startActivity(i);
             return true;
         }

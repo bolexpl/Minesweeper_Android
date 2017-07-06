@@ -35,10 +35,6 @@
             android:name=".activity.PromptActivity"
             android:label="@string/settings"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name=".activity.Login2Activity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".activity.MainActivity"/>
 
         <activity android:name=".activity.LoginActivity"
                   android:label="@string/title_activity_login"

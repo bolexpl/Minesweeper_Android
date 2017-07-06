@@ -67,4 +67,14 @@ public class JSONResponse {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "JSONResponse{" +
+                "error='" + error + '\'' +
+                ", empty='" + empty + '\'' +
+                ", success=" + success +
+                ", user=" + user +
+                ", data=" + data +
+                '}';
+    }
 }

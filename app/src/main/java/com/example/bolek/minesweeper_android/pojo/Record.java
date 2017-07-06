@@ -80,4 +80,16 @@ public class Record {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", czas=" + czas +
+                ", board='" + board + '\'' +
+                ", login='" + login + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
 }
