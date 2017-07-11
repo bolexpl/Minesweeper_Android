@@ -11,10 +11,10 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("/Minesweeper_PHP/api/records.php")
+    @GET("records.php")
     Call<JSONResponse> getRecords(@Query("board") String board, @Query("page") int page, @Query("limit") int limit);
 
-    @POST("/Minesweeper_PHP/api/login.php")
+    @POST("login.php")
     @FormUrlEncoded
     Call<JSONResponse> login(@Field("login") String login, @Field("pass") String pass);
 
