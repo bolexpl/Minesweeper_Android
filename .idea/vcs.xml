@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$USER_HOME$/sda6/home/Dokumenty/AndroidStudioProjects/Minesweeper_Android" vcs="Git" />
   </component>
 </project>

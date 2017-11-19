@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="$USER_HOME$/sda6/home/Dokumenty/AndroidStudioProjects/Minesweeper_Android" />
+            <option value="$USER_HOME$/sda6/home/Dokumenty/AndroidStudioProjects/Minesweeper_Android/app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
