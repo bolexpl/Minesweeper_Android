@@ -1,80 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.bolek.minesweeper_android.activity.PromptActivity">
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/radioGroup">
-
-        <RadioButton
-            android:id="@+id/radio_8x8"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_weight="1"
-            android:text="@string/game_8x8" />
+            android:layout_height="match_parent"
+            tools:context="com.example.bolek.minesweeper_android.activity.PromptActivity">
 
-        <RadioButton
-            android:id="@+id/radio_16x16"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:text="@string/game_16x16" />
-
-        <RadioButton
-            android:id="@+id/radio_30x16"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:text="@string/game_30x16" />
-
-        <RadioButton
-            android:id="@+id/radio_custom"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:text="@string/game_custom" />
-    </RadioGroup>
-
-    <EditText
-        android:id="@+id/width"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="@string/input_width"
-        android:layout_below="@+id/radioGroup"
-        android:layout_alignStart="@+id/height" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="@string/input_height"
-        android:layout_below="@+id/width"
-        android:layout_alignStart="@+id/mines" />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
 
-    <EditText
-        android:id="@+id/mines"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="@string/input_mines"
-        android:layout_below="@+id/height"
-        android:layout_centerHorizontal="true" />
+            <RadioButton
+                android:id="@+id/radio_8x8"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_weight="1"
+                android:text="@string/game_8x8"/>
 
-    <Button
-        android:id="@+id/button_begin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/mines"
-        android:layout_centerHorizontal="true"
-        android:text="@string/button_new_game" />
-</RelativeLayout>
+            <RadioButton
+                android:id="@+id/radio_16x16"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="@string/game_16x16"/>
+
+            <RadioButton
+                android:id="@+id/radio_30x16"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="@string/game_30x16"/>
+
+            <RadioButton
+                android:id="@+id/radio_custom"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="@string/game_custom"/>
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/width"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/height"
+            android:layout_below="@+id/radioGroup"
+            android:layout_marginTop="13dp"
+            android:ems="10"
+            android:hint="@string/input_width"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/mines"
+            android:layout_below="@+id/width"
+            android:ems="10"
+            android:hint="@string/input_height"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/mines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/height"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:hint="@string/input_mines"
+            android:inputType="number"/>
+
+        <Button
+            android:id="@+id/button_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mines"
+            android:layout_centerHorizontal="true"
+            android:text="@string/button_new_game"/>
+
+    </RelativeLayout>
+</ScrollView>
