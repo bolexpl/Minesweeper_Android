@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED) {
@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }, 1);
         }
 
-        vScroll = (VScroll) findViewById(R.id.vScroll);
-        hScroll = (HScroll) findViewById(R.id.hScroll);
-        minesText = (TextView) findViewById(R.id.mines_count);
-        timerText = (TextView) findViewById(R.id.timer);
-        smile = (ImageButton) findViewById(R.id.smile);
+        vScroll = findViewById(R.id.vScroll);
+        hScroll =  findViewById(R.id.hScroll);
+        minesText =  findViewById(R.id.mines_count);
+        timerText =  findViewById(R.id.timer);
+        smile =  findViewById(R.id.smile);
         smile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -383,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         smile.setImageResource(R.drawable.smiley1);
 
-        TableLayout table = (TableLayout) findViewById(R.id.grid);
+        TableLayout table =  findViewById(R.id.grid);
         table.removeAllViews();
         generateBoard(table);
     }
@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             for (int c = 0; c < width; c++) {
                 View v = LayoutInflater.from(this).inflate(R.layout.grid_item, null, false);
-                bt[i][c] = (Button) v.findViewById(R.id.field);
+                bt[i][c] =  v.findViewById(R.id.field);
                 bt[i][c].setOnClickListener(this);
                 bt[i][c].setOnLongClickListener(this);
 
