@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/sda6/home/Dokumenty/AndroidStudioProjects/Minesweeper_Android/Minesweeper_Android.iml" filepath="$USER_HOME$/sda6/home/Dokumenty/AndroidStudioProjects/Minesweeper_Android/Minesweeper_Android.iml" />
-      <module fileurl="file://$USER_HOME$/sda6/home/Dokumenty/AndroidStudioProjects/Minesweeper_Android/app/app.iml" filepath="$USER_HOME$/sda6/home/Dokumenty/AndroidStudioProjects/Minesweeper_Android/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Minesweeper_Android.iml" filepath="$PROJECT_DIR$/Minesweeper_Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
